@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import androidx.core.database.getIntOrNull
 
 class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, NOMBRE_BASE_DATOS, null, VERSION_BASE_DATOS) {
 
@@ -58,8 +57,27 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, NOMBRE_BASE
         onCreate(db)
     }
 
+    // Método para verificar si existe un proveedor
+    fun existeProveedor(idProveedor: Int): Boolean {
+        val db = readableDatabase
+        val cursor = db.query(
+            TABLA_PROVEEDOR,
+            arrayOf(COLUMNA_ID_PROVEEDOR),
+            "$COLUMNA_ID_PROVEEDOR = ?",
+            arrayOf(idProveedor.toString()),
+            null, null, null
+        )
+        cursor.use {
+            return it.count > 0 // Devuelve true si hay al menos un proveedor con el ID dado
+        }
+    }
+
     // Métodos para la tabla producto
     fun insertarProducto(nombre: String, precio: Double, cantidad: Int, idProveedor: Int?): Long {
+        if (idProveedor != null && !existeProveedor(idProveedor)) {
+            throw IllegalArgumentException("El proveedor con ID $idProveedor no existe.")
+        }
+
         val db = writableDatabase
         val valores = ContentValues().apply {
             put(COLUMNA_NOMBRE_PRODUCTO, nombre)
@@ -76,7 +94,7 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, NOMBRE_BASE
             put(COLUMNA_NOMBRE_PRODUCTO, nombre)
             put(COLUMNA_PRECIO_PRODUCTO, precio)
             put(COLUMNA_CANTIDAD_PRODUCTO, cantidad)
-            put(COLUMNA_ID_PROVEEDOR, idProveedor)
+            put(COLUMNA_ID_PROVEEDOR_PRODUCTO, idProveedor)
         }
         return db.update(TABLA_PRODUCTO, valores, "$COLUMNA_ID_PRODUCTO=?", arrayOf(id.toString()))
     }
@@ -115,7 +133,6 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, NOMBRE_BASE
         return db.insert(TABLA_PROVEEDOR, null, valores)
     }
 
-    // Métodos para la tabla proveedor
     fun actualizarProveedor(id: Int, nombre: String, empresa: String): Int {
         val db = writableDatabase
         val valores = ContentValues().apply {
@@ -127,7 +144,6 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, NOMBRE_BASE
 
     fun eliminarProveedor(id: Int): Int {
         val db = writableDatabase
-        // Antes de eliminar un proveedor, podemos verificar si está asociado a algún producto
         val cursor = db.query(
             TABLA_PRODUCTO,
             arrayOf(COLUMNA_ID_PRODUCTO),
@@ -136,12 +152,10 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, NOMBRE_BASE
             null, null, null
         )
         cursor.use {
-            // Si existen productos asociados, no se elimina el proveedor
             if (it.count > 0) {
-                return 0 // No se puede eliminar el proveedor porque tiene productos asociados
+                return 0 // No se puede eliminar porque tiene productos asociados
             }
         }
-        // Si no hay productos asociados, procedemos a eliminar el proveedor
         return db.delete(TABLA_PROVEEDOR, "$COLUMNA_ID_PROVEEDOR=?", arrayOf(id.toString()))
     }
 
@@ -152,7 +166,7 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, NOMBRE_BASE
         cursor.use {
             while (it.moveToNext()) {
                 val proveedor = Proveedor(
-                    id = it.getInt(it.getColumnIndexOrThrow(COLUMNA_ID_PROVEEDOR_PRODUCTO)),
+                    id = it.getInt(it.getColumnIndexOrThrow(COLUMNA_ID_PROVEEDOR)),
                     nombre = it.getString(it.getColumnIndexOrThrow(COLUMNA_NOMBRE_PROVEEDOR)),
                     empresa = it.getString(it.getColumnIndexOrThrow(COLUMNA_EMPRESA_PROVEEDOR))
                 )
@@ -162,5 +176,3 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, NOMBRE_BASE
         return listaProveedores
     }
 }
-
-

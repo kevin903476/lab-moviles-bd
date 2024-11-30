@@ -13,7 +13,13 @@
         android:theme="@style/Theme.Crud"
         tools:targetApi="31">
         <activity
-            android:name=".AddProductActivity"
+            android:name=".Vista_Proveedores"
+            android:exported="false" />
+        <activity
+            android:name=".AgregarProveedorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AgregarProductoActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

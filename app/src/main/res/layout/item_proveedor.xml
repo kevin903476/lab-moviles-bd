@@ -6,35 +6,27 @@
     android:padding="8dp"
     android:background="?attr/selectableItemBackground">
 
-    <!-- Nombre del producto -->
+    <!-- Nombre del proveedor -->
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/nombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nombre del producto"
+        android:text="Nombre del proveddor"
         android:textStyle="bold"
         android:textSize="16sp"
         android:ellipsize="end"
         android:maxLines="1"/>
 
-    <!-- Precio del producto -->
+    <!-- empresa del proveedor -->
     <TextView
-        android:id="@+id/tvPrice"
+        android:id="@+id/empresa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Precio: 0.0"
-        android:layout_marginTop="4dp"
+        android:text="Empresa"
+        android:textStyle="bold"
+        android:textSize="16sp"
         android:ellipsize="end"
         android:maxLines="1"/>
 
-    <!-- Cantidad del producto -->
-    <TextView
-        android:id="@+id/tvQuantity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cantidad: 0"
-        android:layout_marginTop="4dp"
-        android:ellipsize="end"
-        android:maxLines="1"/>
 
 </LinearLayout>

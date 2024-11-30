@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddProductActivity">
+    tools:context=".AgregarProductoActivity">
 
 
     <ScrollView
@@ -17,14 +17,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <!-- Campo de entrada para el nombre del producto -->
-            <EditText            android:id="@+id/etName"
+            <EditText android:id="@+id/nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nombre del producto"
                 android:inputType="text" />
             <!-- Campo de entrada para el precio del producto -->
             <EditText
-                android:id="@+id/etPrice"
+                android:id="@+id/precio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Precio"
@@ -32,10 +32,17 @@
                 android:layout_marginTop="8dp" />
             <!-- Campo de entrada para la cantidad del producto -->
             <EditText
-                android:id="@+id/etQuantity"
+                android:id="@+id/cantidad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Cantidad"
+                android:inputType="number"
+                android:layout_marginTop="8dp" />
+            <EditText
+                android:id="@+id/idProveedor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="proveedor"
                 android:inputType="number"
                 android:layout_marginTop="8dp" />
             <!-- Botón para guardar el producto -->

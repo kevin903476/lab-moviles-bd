@@ -2,87 +2,165 @@ package com.example.crud
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import androidx.core.database.getIntOrNull
 
-class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, NOMBRE_BASE_DATOS, null, VERSION_BASE_DATOS) {
 
     companion object {
-        const val DATABASE_NAME = "ProductManager.db" // Nombre de la base de datos
-        const val DATABASE_VERSION = 1 // Versión de la base de datos
+        const val NOMBRE_BASE_DATOS = "tarea.db"
+        const val VERSION_BASE_DATOS = 1
 
-        // Nombre de la tabla y columnas
-        const val TABLE_NAME = "products" // Nombre de la tabla
-        const val COLUMN_ID = "id" // Columna para el ID único de cada producto
-        const val COLUMN_NAME = "name" // Columna para el nombre del producto
-        const val COLUMN_PRICE = "price" // Columna para el precio del producto
-        const val COLUMN_QUANTITY = "quantity" // Columna para la cantidad del producto
+        // Tabla Producto
+        const val TABLA_PRODUCTO = "producto"
+        const val COLUMNA_ID_PRODUCTO = "idProducto"
+        const val COLUMNA_NOMBRE_PRODUCTO = "nombre"
+        const val COLUMNA_PRECIO_PRODUCTO = "precio"
+        const val COLUMNA_CANTIDAD_PRODUCTO = "cantidad"
+        const val COLUMNA_ID_PROVEEDOR_PRODUCTO = "idProveedor"
 
+        // Tabla Proveedor
+        const val TABLA_PROVEEDOR = "proveedor"
+        const val COLUMNA_ID_PROVEEDOR = "idProveedor"
+        const val COLUMNA_NOMBRE_PROVEEDOR = "nombre"
+        const val COLUMNA_EMPRESA_PROVEEDOR = "empresa"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        // Instrucción SQL para crear la tabla
-        val createTableQuery = """
-            CREATE TABLE $TABLE_NAME (
-                $COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                $COLUMN_NAME TEXT NOT NULL,
-                $COLUMN_PRICE REAL NOT NULL,
-                $COLUMN_QUANTITY INTEGER NOT NULL
+        // Crear tabla proveedor
+        val crearTablaProveedor = """
+            CREATE TABLE $TABLA_PROVEEDOR (
+                $COLUMNA_ID_PROVEEDOR_PRODUCTO INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COLUMNA_NOMBRE_PROVEEDOR TEXT NOT NULL,
+                $COLUMNA_EMPRESA_PROVEEDOR TEXT NOT NULL
             )
         """
-        db.execSQL(createTableQuery) // Ejecuta la instrucción para crear la tabla
+        db.execSQL(crearTablaProveedor)
+
+        // Crear tabla producto
+        val crearTablaProducto = """
+            CREATE TABLE $TABLA_PRODUCTO (
+                $COLUMNA_ID_PRODUCTO INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COLUMNA_NOMBRE_PRODUCTO TEXT NOT NULL,
+                $COLUMNA_PRECIO_PRODUCTO REAL NOT NULL,
+                $COLUMNA_CANTIDAD_PRODUCTO INTEGER NOT NULL,
+                $COLUMNA_ID_PROVEEDOR_PRODUCTO INTEGER,
+                FOREIGN KEY ($COLUMNA_ID_PROVEEDOR_PRODUCTO) REFERENCES $TABLA_PROVEEDOR($COLUMNA_ID_PROVEEDOR_PRODUCTO)
+            )
+        """
+        db.execSQL(crearTablaProducto)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        // Elimina la tabla existente si ya existe y la recrea
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        db.execSQL("DROP TABLE IF EXISTS $TABLA_PRODUCTO")
+        db.execSQL("DROP TABLE IF EXISTS $TABLA_PROVEEDOR")
         onCreate(db)
     }
 
-    fun insertProduct(name: String, price: Double, quantity: Int): Long {
-        val db = writableDatabase // Obtiene la base de datos en modo escritura
-        val values = ContentValues().apply {
-            put(COLUMN_NAME, name) // Añade el nombre del producto
-            put(COLUMN_PRICE, price) // Añade el precio del producto
-            put(COLUMN_QUANTITY, quantity) // Añade la cantidad del producto
+    // Métodos para la tabla producto
+    fun insertarProducto(nombre: String, precio: Double, cantidad: Int, idProveedor: Int?): Long {
+        val db = writableDatabase
+        val valores = ContentValues().apply {
+            put(COLUMNA_NOMBRE_PRODUCTO, nombre)
+            put(COLUMNA_PRECIO_PRODUCTO, precio)
+            put(COLUMNA_CANTIDAD_PRODUCTO, cantidad)
+            put(COLUMNA_ID_PROVEEDOR_PRODUCTO, idProveedor)
         }
-        return db.insert(TABLE_NAME, null, values) // Inserta los datos y retorna el ID del nuevo registro
+        return db.insert(TABLA_PRODUCTO, null, valores)
     }
 
-
-
-    fun updateProduct(id: Int, name: String, price: Double, quantity: Int): Int {
-        val db = writableDatabase // Obtiene la base de datos en modo escritura
-        val values = ContentValues().apply {
-            put(COLUMN_NAME, name) // Actualiza el nombre
-            put(COLUMN_PRICE, price) // Actualiza el precio
-            put(COLUMN_QUANTITY, quantity) // Actualiza la cantidad
+    fun actualizarProducto(id: Int, nombre: String, precio: Double, cantidad: Int, idProveedor: Int?): Int {
+        val db = writableDatabase
+        val valores = ContentValues().apply {
+            put(COLUMNA_NOMBRE_PRODUCTO, nombre)
+            put(COLUMNA_PRECIO_PRODUCTO, precio)
+            put(COLUMNA_CANTIDAD_PRODUCTO, cantidad)
+            put(COLUMNA_ID_PROVEEDOR_PRODUCTO, idProveedor)
         }
-        // Actualiza el registro donde el ID coincide
-        return db.update(TABLE_NAME, values, "$COLUMN_ID=?", arrayOf(id.toString()))
+        return db.update(TABLA_PRODUCTO, valores, "$COLUMNA_ID_PRODUCTO=?", arrayOf(id.toString()))
     }
 
-    fun deleteProduct(id: Int): Int {
-        val db = writableDatabase // Obtiene la base de datos en modo escritura
-        // Elimina el registro donde el ID coincide
-        return db.delete(TABLE_NAME, "$COLUMN_ID=?", arrayOf(id.toString()))
+    fun eliminarProducto(id: Int): Int {
+        val db = writableDatabase
+        return db.delete(TABLA_PRODUCTO, "$COLUMNA_ID_PRODUCTO=?", arrayOf(id.toString()))
     }
-    fun getAllProducts(): List<Product> {
+
+    fun obtenerProductos(): List<Producto> {
         val db = readableDatabase
-        val productList = mutableListOf<Product>()
-        val cursor = db.query(TABLE_NAME, null, null, null, null, null, "$COLUMN_NAME ASC")
+        val listaProductos = mutableListOf<Producto>()
+        val cursor = db.query(TABLA_PRODUCTO, null, null, null, null, null, "$COLUMNA_NOMBRE_PRODUCTO ASC")
         cursor.use {
             while (it.moveToNext()) {
-                val product = Product(
-                    id = it.getInt(it.getColumnIndexOrThrow(COLUMN_ID)),
-                    name = it.getString(it.getColumnIndexOrThrow(COLUMN_NAME)),
-                    price = it.getDouble(it.getColumnIndexOrThrow(COLUMN_PRICE)),
-                    quantity = it.getInt(it.getColumnIndexOrThrow(COLUMN_QUANTITY))
+                val producto = Producto(
+                    id = it.getInt(it.getColumnIndexOrThrow(COLUMNA_ID_PRODUCTO)),
+                    nombre = it.getString(it.getColumnIndexOrThrow(COLUMNA_NOMBRE_PRODUCTO)),
+                    precio = it.getDouble(it.getColumnIndexOrThrow(COLUMNA_PRECIO_PRODUCTO)),
+                    cantidad = it.getInt(it.getColumnIndexOrThrow(COLUMNA_CANTIDAD_PRODUCTO)),
+                    idProveedor = it.getInt(it.getColumnIndexOrThrow(COLUMNA_ID_PROVEEDOR_PRODUCTO))
                 )
-                productList.add(product)
+                listaProductos.add(producto)
             }
         }
-        return productList
+        return listaProductos
+    }
+
+    // Métodos para la tabla proveedor
+    fun insertarProveedor(nombre: String, empresa: String): Long {
+        val db = writableDatabase
+        val valores = ContentValues().apply {
+            put(COLUMNA_NOMBRE_PROVEEDOR, nombre)
+            put(COLUMNA_EMPRESA_PROVEEDOR, empresa)
+        }
+        return db.insert(TABLA_PROVEEDOR, null, valores)
+    }
+
+    // Métodos para la tabla proveedor
+    fun actualizarProveedor(id: Int, nombre: String, empresa: String): Int {
+        val db = writableDatabase
+        val valores = ContentValues().apply {
+            put(COLUMNA_NOMBRE_PROVEEDOR, nombre)
+            put(COLUMNA_EMPRESA_PROVEEDOR, empresa)
+        }
+        return db.update(TABLA_PROVEEDOR, valores, "$COLUMNA_ID_PROVEEDOR=?", arrayOf(id.toString()))
+    }
+
+    fun eliminarProveedor(id: Int): Int {
+        val db = writableDatabase
+        // Antes de eliminar un proveedor, podemos verificar si está asociado a algún producto
+        val cursor = db.query(
+            TABLA_PRODUCTO,
+            arrayOf(COLUMNA_ID_PRODUCTO),
+            "$COLUMNA_ID_PROVEEDOR_PRODUCTO = ?",
+            arrayOf(id.toString()),
+            null, null, null
+        )
+        cursor.use {
+            // Si existen productos asociados, no se elimina el proveedor
+            if (it.count > 0) {
+                return 0 // No se puede eliminar el proveedor porque tiene productos asociados
+            }
+        }
+        // Si no hay productos asociados, procedemos a eliminar el proveedor
+        return db.delete(TABLA_PROVEEDOR, "$COLUMNA_ID_PROVEEDOR=?", arrayOf(id.toString()))
+    }
+
+    fun obtenerProveedores(): List<Proveedor> {
+        val db = readableDatabase
+        val listaProveedores = mutableListOf<Proveedor>()
+        val cursor = db.query(TABLA_PROVEEDOR, null, null, null, null, null, "$COLUMNA_NOMBRE_PROVEEDOR ASC")
+        cursor.use {
+            while (it.moveToNext()) {
+                val proveedor = Proveedor(
+                    id = it.getInt(it.getColumnIndexOrThrow(COLUMNA_ID_PROVEEDOR_PRODUCTO)),
+                    nombre = it.getString(it.getColumnIndexOrThrow(COLUMNA_NOMBRE_PROVEEDOR)),
+                    empresa = it.getString(it.getColumnIndexOrThrow(COLUMNA_EMPRESA_PROVEEDOR))
+                )
+                listaProveedores.add(proveedor)
+            }
+        }
+        return listaProveedores
     }
 }
+
+

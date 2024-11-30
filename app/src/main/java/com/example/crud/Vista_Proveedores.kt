@@ -11,16 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : AppCompatActivity() {
+class Vista_Proveedores : AppCompatActivity() {
 
     private lateinit var dbHelper: MyDatabaseHelper
-    private lateinit var adapter: ProductoAdapter
+    private lateinit var adapter: ProveedorAdapter
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_vista_proveedores)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -33,45 +33,45 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Configura el botón flotante para agregar un nuevo producto
-        findViewById<FloatingActionButton>(R.id.agregarProducto).setOnClickListener {
-            startActivity(Intent(this, AgregarProductoActivity::class.java))
+        findViewById<FloatingActionButton>(R.id.agregarProveedor).setOnClickListener {
+            startActivity(Intent(this, AgregarProveedorActivity::class.java))
         }
-        findViewById<FloatingActionButton>(R.id.btnProveedor).setOnClickListener {
-            startActivity(Intent(this, Vista_Proveedores::class.java))
+        findViewById<FloatingActionButton>(R.id.btnProducto).setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
         }
 
         // Cargar los productos en el RecyclerView
-        loadProducts()
+        loadProveedores()
     }
 
-    private fun loadProducts() {
+    private fun loadProveedores() {
         // Obtener productos de la base de datos y configurar el adaptador
-        val products = dbHelper.obtenerProductos()
-        adapter = ProductoAdapter(
-            products,
-            onProductoClick = { producto -> editProduct(producto.id) },
-            onProductoLongClick = { producto -> deleteProduct(producto) }
+        val proveedor = dbHelper.obtenerProveedores()
+        adapter = ProveedorAdapter(
+            proveedor,
+            onProveedorClick = { proveedor -> editProveedor(proveedor.id) },
+            onProveedorLongClick = { proveedor -> deleteProveedor(proveedor) }
         )
         recyclerView.adapter = adapter
     }
 
     override fun onResume() {
         super.onResume()
-        loadProducts() // Refrescar la lista de productos cuando la actividad se reanuda
+        loadProveedores() // Refrescar la lista de productos cuando la actividad se reanuda
     }
 
-    private fun editProduct(productId: Int) {
-        // Iniciar actividad para editar un producto existente
-        val intent = Intent(this, AgregarProductoActivity::class.java).apply {
-            putExtra("PRODUCTO_ID", productId) // Pasar el ID del producto
+    private fun editProveedor(proveedorId: Int) {
+        // Iniciar actividad para editar un proveedor existente
+        val intent = Intent(this, AgregarProveedorActivity::class.java).apply {
+            putExtra("PROVEEDOR_ID", proveedorId) // Pasar el ID del proveedor
         }
         startActivity(intent)
     }
 
-    private fun deleteProduct(product: Producto) {
+    private fun deleteProveedor(proveedor: Proveedor) {
         // Eliminar producto de la base de datos
-        dbHelper.eliminarProducto(product.id)
+        dbHelper.eliminarProveedor(proveedor.id)
         Toast.makeText(this, "Producto eliminado", Toast.LENGTH_SHORT).show()
-        loadProducts() // Refrescar lista después de eliminar
+        loadProveedores() // Refrescar lista después de eliminar
     }
 }

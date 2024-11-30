@@ -31,7 +31,7 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, NOMBRE_BASE
         // Crear tabla proveedor
         val crearTablaProveedor = """
             CREATE TABLE $TABLA_PROVEEDOR (
-                $COLUMNA_ID_PROVEEDOR_PRODUCTO INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COLUMNA_ID_PROVEEDOR INTEGER PRIMARY KEY AUTOINCREMENT,
                 $COLUMNA_NOMBRE_PROVEEDOR TEXT NOT NULL,
                 $COLUMNA_EMPRESA_PROVEEDOR TEXT NOT NULL
             )
@@ -46,7 +46,7 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, NOMBRE_BASE
                 $COLUMNA_PRECIO_PRODUCTO REAL NOT NULL,
                 $COLUMNA_CANTIDAD_PRODUCTO INTEGER NOT NULL,
                 $COLUMNA_ID_PROVEEDOR_PRODUCTO INTEGER,
-                FOREIGN KEY ($COLUMNA_ID_PROVEEDOR_PRODUCTO) REFERENCES $TABLA_PROVEEDOR($COLUMNA_ID_PROVEEDOR_PRODUCTO)
+                FOREIGN KEY ($COLUMNA_ID_PROVEEDOR_PRODUCTO) REFERENCES $TABLA_PROVEEDOR($COLUMNA_ID_PROVEEDOR)
             )
         """
         db.execSQL(crearTablaProducto)
@@ -76,7 +76,7 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, NOMBRE_BASE
             put(COLUMNA_NOMBRE_PRODUCTO, nombre)
             put(COLUMNA_PRECIO_PRODUCTO, precio)
             put(COLUMNA_CANTIDAD_PRODUCTO, cantidad)
-            put(COLUMNA_ID_PROVEEDOR_PRODUCTO, idProveedor)
+            put(COLUMNA_ID_PROVEEDOR, idProveedor)
         }
         return db.update(TABLA_PRODUCTO, valores, "$COLUMNA_ID_PRODUCTO=?", arrayOf(id.toString()))
     }

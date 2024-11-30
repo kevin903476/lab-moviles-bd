@@ -159,7 +159,7 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, NOMBRE_BASE
         return db.delete(TABLA_PROVEEDOR, "$COLUMNA_ID_PROVEEDOR=?", arrayOf(id.toString()))
     }
 
-    fun obtenerProveedores(): List<Proveedor> {
+    fun obtenerProveedores(): List<Proveedor> { 
         val db = readableDatabase
         val listaProveedores = mutableListOf<Proveedor>()
         val cursor = db.query(TABLA_PROVEEDOR, null, null, null, null, null, "$COLUMNA_NOMBRE_PROVEEDOR ASC")

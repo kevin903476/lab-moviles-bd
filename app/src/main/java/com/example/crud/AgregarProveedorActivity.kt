@@ -1,5 +1,6 @@
 package com.example.crud
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,10 @@ class AgregarProveedorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar_proveedor)
 
+
+        findViewById<Button>(R.id.btnDevolverse).setOnClickListener {
+            startActivity(Intent(this, Vista_Proveedores::class.java))
+        }
         dbHelper = MyDatabaseHelper(this)
 
         // Referenciar elementos de la interfaz

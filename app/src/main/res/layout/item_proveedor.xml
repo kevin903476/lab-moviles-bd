@@ -1,39 +1,51 @@
-<LinearLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp"
-    android:background="?attr/selectableItemBackground">
+    android:layout_marginTop="20dp"
+    >
 
-    <!-- Nombre del proveedor -->
-    <TextView
-        android:id="@+id/nombre"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nombre del proveddor"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:ellipsize="end"
-        android:maxLines="1"/>
-    <TextView
-        android:id="@+id/idProveedor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Id del proveddor"
-        android:textSize="16sp"
-        android:ellipsize="end"
-        android:maxLines="1"/>
-
-    <!-- empresa del proveedor -->
-    <TextView
-        android:id="@+id/empresa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Empresa"
-        android:textSize="16sp"
-        android:ellipsize="end"
-        android:maxLines="1"/>
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="#6c9d7a">
 
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/nombre"
+                android:textAlignment="center"
+                android:textColor="#E9E9E9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre del provedor"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:ellipsize="end"
+                android:maxLines="1"/>
+            <TextView
+                android:id="@+id/idProveedor"
+                android:textColor="#E9E9E9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Id del proveddor"
+                android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"/>
+
+            <!-- empresa del proveedor -->
+            <TextView
+                android:id="@+id/empresa"
+                android:textColor="#E9E9E9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Empresa"
+                android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"/>
+
+
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

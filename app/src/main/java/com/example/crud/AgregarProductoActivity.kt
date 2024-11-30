@@ -1,8 +1,10 @@
 package com.example.crud
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class AgregarProductoActivity : AppCompatActivity() {
 
@@ -13,6 +15,10 @@ class AgregarProductoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar_producto)
 
+
+        findViewById<Button>(R.id.btnDevolverse).setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
         dbHelper = MyDatabaseHelper(this)
 
         // Referenciar elementos de la interfaz

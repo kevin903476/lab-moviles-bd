@@ -5,14 +5,40 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Vista_Proveedores">
+    tools:context=".Vista_Proveedores"
+    android:background="#a7d7b7">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:src="@drawable/maxi"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/actor"
+        android:text="Proveedores"
+        android:textColor="#1f3b3d"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <!-- RecyclerView para mostrar la lista de productos -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp" />
+        android:layout_height="0dp"
+        android:layout_below="@id/titulo"
+        android:layout_above="@id/agregarProveedor"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp" />
+
     <!-- Botón flotante para agregar productos -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/agregarProveedor"
@@ -22,6 +48,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
         android:contentDescription="Agregar proveedor"
+        android:backgroundTint="#4b816f"
         app:srcCompat="@drawable/ic_add" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -35,7 +62,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="20dp"
-        android:contentDescription="Eliminar producto"
+        android:backgroundTint="#4b816f"
+        android:contentDescription="Pantalla producto"
         app:srcCompat="@drawable/ic_producto" />
 
 

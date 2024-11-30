@@ -5,26 +5,42 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AgregarProductoActivity">
+    tools:context=".AgregarProductoActivity"
+    android:background="#a7d7b7">
 
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="25dp"
+
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <!-- Campo de entrada para el nombre del producto -->
-            <EditText android:id="@+id/nombre"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+            <ImageView
                 android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/producto"
+                android:layout_marginBottom="15dp"
+                >
+            </ImageView>
+            <!-- Campo de entrada para el nombre del producto -->
+            <EditText
+                android:id="@+id/nombre"
+                android:textColor="#4b816f"
+                android:textColorHint="#4b816f"                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre del producto"
+                android:hint="Nombre del Producto"
                 android:inputType="text" />
             <!-- Campo de entrada para el precio del producto -->
             <EditText
                 android:id="@+id/precio"
+                android:textColor="#4b816f"
+                android:textColorHint="#4b816f"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Precio"
@@ -33,16 +49,19 @@
             <!-- Campo de entrada para la cantidad del producto -->
             <EditText
                 android:id="@+id/cantidad"
-                android:layout_width="match_parent"
+                android:textColor="#4b816f"
+                android:textColorHint="#4b816f"                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Cantidad"
                 android:inputType="number"
                 android:layout_marginTop="8dp" />
             <EditText
                 android:id="@+id/idProveedor"
+                android:textColor="#4b816f"
+                android:textColorHint="#4b816f"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="proveedor"
+                android:hint="Id Proveedor"
                 android:inputType="number"
                 android:layout_marginTop="8dp" />
             <!-- Botón para guardar el producto -->
@@ -50,6 +69,7 @@
                 android:id="@+id/btnSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#4b816f"
                 android:text="Guardar"
                 android:layout_marginTop="16dp" />
             <Button
@@ -57,13 +77,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Eliminar"
+                android:backgroundTint="#4b816f"
                 android:layout_marginTop="16dp" />
 
             <Button
                 android:id="@+id/btnDevolverse"
                 android:layout_width="124dp"
                 android:layout_height="62dp"
-                android:layout_marginTop="330dp"
+                android:layout_marginTop="50dp"
+                android:backgroundTint="#4b816f"
                 android:text="Atras" />
         </LinearLayout>
 

@@ -1,25 +1,36 @@
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    >
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="?attr/selectableItemBackground">
+    android:background="#6c9d7a">
 
     <!-- Nombre del producto -->
     <TextView
         android:id="@+id/nombre"
+        android:textColor="#E9E9E9"
+        android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Nombre del producto"
         android:textStyle="bold"
-        android:textSize="16sp"
+        android:textSize="24sp"
         android:ellipsize="end"
         android:maxLines="1"/>
 
     <!-- Precio del producto -->
     <TextView
         android:id="@+id/precio"
+        android:textColor="#E9E9E9"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Precio: 0.0"
@@ -30,6 +41,8 @@
     <!-- Cantidad del producto -->
     <TextView
         android:id="@+id/cantidad"
+        android:textColor="#E9E9E9"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cantidad: 0"
@@ -39,6 +52,8 @@
 
     <TextView
         android:id="@+id/idProveedor"
+        android:textColor="#E9E9E9"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="IdProveedor: 0"
@@ -47,3 +62,4 @@
         android:maxLines="1"/>
 
 </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

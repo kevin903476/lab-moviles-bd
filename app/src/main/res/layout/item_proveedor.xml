@@ -16,6 +16,14 @@
         android:textSize="16sp"
         android:ellipsize="end"
         android:maxLines="1"/>
+    <TextView
+        android:id="@+id/idProveedor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Id del proveddor"
+        android:textSize="16sp"
+        android:ellipsize="end"
+        android:maxLines="1"/>
 
     <!-- empresa del proveedor -->
     <TextView
@@ -23,7 +31,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Empresa"
-        android:textStyle="bold"
         android:textSize="16sp"
         android:ellipsize="end"
         android:maxLines="1"/>

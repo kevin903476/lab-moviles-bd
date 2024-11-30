@@ -22,7 +22,7 @@ class AgregarProveedorActivity : AppCompatActivity() {
         val eliminarButton = findViewById<Button>(R.id.btnDelete)
 
         // Obtener el ID del proveedor (si es un proveedor existente)
-        idProveedor = intent.getIntExtra("ID_PROVEEDOR", -1).takeIf { it != -1 }
+        idProveedor = intent.getIntExtra("PROVEEDOR_ID", -1).takeIf { it != -1 }
 
         // Si se edita un proveedor, cargar los datos
         idProveedor?.let { id ->

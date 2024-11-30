@@ -24,7 +24,7 @@ class AgregarProductoActivity : AppCompatActivity() {
         val eliminarButton = findViewById<Button>(R.id.btnDelete)
 
         // Obtener el ID del producto (si es un producto existente)
-        idProducto = intent.getIntExtra("ID_PRODUCTO", -1).takeIf { it != -1 }
+        idProducto = intent.getIntExtra("PRODUCTO_ID", -1).takeIf { it != -1 }
 
         // Si se edita un producto, cargar los datos
         idProducto?.let { id ->

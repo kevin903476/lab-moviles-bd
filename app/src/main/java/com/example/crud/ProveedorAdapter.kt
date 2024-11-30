@@ -14,6 +14,7 @@ class ProveedorAdapter(
 
     inner class ProveedorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nombreTextView: TextView = view.findViewById(R.id.nombre)
+        val idProveedorTextView: TextView = view.findViewById(R.id.idProveedor)
         val empresaTextView: TextView = view.findViewById(R.id.empresa)
     }
 
@@ -25,6 +26,7 @@ class ProveedorAdapter(
     override fun onBindViewHolder(holder: ProveedorViewHolder, position: Int) {
         val proveedor = proveedores[position]
         holder.nombreTextView.text = proveedor.nombre
+        holder.idProveedorTextView.text = "ID: ${proveedor.id}"
         holder.empresaTextView.text = "Empresa: ${proveedor.empresa}"
 
         // Configurar eventos de clic y clic prolongado

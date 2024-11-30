@@ -16,7 +16,7 @@ class ProductoAdapter(
         val nombreTextView: TextView = view.findViewById(R.id.nombre)
         val precioTextView: TextView = view.findViewById(R.id.precio)
         val cantidadTextView: TextView = view.findViewById(R.id.cantidad)
-        val proveedorTextView: TextView = view.findViewById(R.id.idProveedor) // Asumimos que se añadirá al layout
+        val proveedorTextView: TextView = view.findViewById(R.id.idProveedor)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductoViewHolder {
@@ -29,7 +29,7 @@ class ProductoAdapter(
         holder.nombreTextView.text = producto.nombre
         holder.precioTextView.text = "Precio: ${producto.precio}"
         holder.cantidadTextView.text = "Cantidad: ${producto.cantidad}"
-        holder.proveedorTextView.text = "Proveedor ID: ${producto.idProveedor ?: "N/A"}"
+        holder.proveedorTextView.text = "Proveedor ID: ${producto.idProveedor}"
 
         // Configurar eventos de clic y clic prolongado
         holder.itemView.setOnClickListener {

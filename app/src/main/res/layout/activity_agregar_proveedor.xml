@@ -44,6 +44,13 @@
                 android:layout_height="wrap_content"
                 android:text="Eliminar"
                 android:layout_marginTop="16dp" />
+
+            <Button
+                android:id="@+id/btnDevolverse"
+                android:layout_width="124dp"
+                android:layout_height="62dp"
+                android:layout_marginTop="440dp"
+                android:text="Atras" />
         </LinearLayout>
 
     </ScrollView>
